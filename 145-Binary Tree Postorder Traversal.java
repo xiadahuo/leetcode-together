@@ -93,3 +93,77 @@ class Solution {
     }
 }
 
+//后序非递归-模仿先序非递归
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        LinkedList<Integer> res = new LinkedList<>();
+        if(root == null) return res;
+        helper(root, res);
+        return res;
+    }
+    public void helper(TreeNode root, LinkedList<Integer> res){
+        TreeNode cur = root;
+        Stack<TreeNode> stack = new Stack<>();
+        while(cur != null || !stack.isEmpty()){
+            if(cur != null){
+                stack.push(cur);
+                res.addFirst(cur.val); // 每次放到第一个位置 //Reverse the process of preorder 
+                cur = cur.right; //Reverse the process of preorder
+            }else{
+                TreeNode temp = stack.pop();
+                cur = temp.left;  //Reverse the process of preorder
+            }
+        }
+    }
+}
+
+
+
+//concise method postOrder
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> postorderTraversal(TreeNode root) {
+        LinkedList<Integer> res = new LinkedList<>();
+        if(root == null) return res;
+        helper(root, res);
+        return res;
+    }
+    public void helper(TreeNode root, LinkedList<Integer> res){
+        Stack<TreeNode> stack = new Stack<>();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode cur = stack.pop();
+            res.addFirst(cur.val);
+            if(cur.left != null) stack.push(cur.left);
+            if(cur.right != null) stack.push(cur.right);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
